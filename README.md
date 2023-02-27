@@ -19,6 +19,26 @@ Tools yang digunakan:
 
 ## Instalasi
 
+```
+npm install
+```
+
 ## Menjalankan Program
 
+```
+npm run dev
+```
+
 ## Simulasi Postman
+
+Mendapatkan data blokchain
+
+```
+GET localhost:3001/blocks
+```
+
+Menambah blok pada blokchain
+
+```
+POST localhost:3001/mine
+```
