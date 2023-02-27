@@ -43,7 +43,7 @@ Menambah blok pada blokchain
 POST localhost:3001/mine
 ```
 
-Pada saat menambah blok, perlu menyertakan "body" untuk menambahkan nilai "data". Pengiriman request tanpa mennyertakan data akan menyebakan isian data pada blok bernilai "undefined". Format yang akan dituliskan pada body menggunakan format penulisan JSON, oleh karena itu pilih type "JSON" pada format penulisan body. Berikut contoh isian "body" pada postman
+Pada saat menambah blok, perlu menyertakan "body" untuk menambahkan nilai "data". Pengiriman request tanpa mennyertakan data akan menyebakan isian data pada blok bernilai "undefined". Format yang akan dituliskan pada body menggunakan format penulisan JSON, oleh karena itu pilih type "JSON" pada format penulisan body dan pilih opsi "raw" dalam menuliskannya. Berikut contoh isian "body" pada postman
 
 ```
 {
