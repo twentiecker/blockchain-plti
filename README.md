@@ -13,9 +13,9 @@ Pembahasan:
 
 Tools yang digunakan:
 
-1. Visual Studio Code
-2. Node Js
-3. Postman
+1. [Visual Studio Code](https://code.visualstudio.com/download)
+2. [Node Js](https://nodejs.org/en/download/)
+3. [Postman](https://www.postman.com/downloads/)
 
 ## Instalasi
 
