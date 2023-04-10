@@ -20,13 +20,7 @@ class Wallet {
     return this.keyPair.sign(dataHash);
   }
 
-  createTransaction(
-    recipient,
-    amount,
-    blockchain,
-    transactionPool,
-    contractCode
-  ) {
+  createTransaction(recipient, amount, blockchain, transactionPool) {
     this.balance = this.calculateBalance(blockchain);
     if (amount > this.balance) {
       console.log(
@@ -36,14 +30,9 @@ class Wallet {
     }
     let transaction = transactionPool.existingTransaction(this.publicKey);
     if (transaction) {
-      transaction.update(this, recipient, amount, contractCode);
+      transaction.update(this, recipient, amount);
     } else {
-      transaction = Transaction.newTransaction(
-        this,
-        recipient,
-        amount,
-        contractCode
-      );
+      transaction = Transaction.newTransaction(this, recipient, amount);
       transactionPool.updateOrAddTransaction(transaction);
     }
     return transaction;
