@@ -18,6 +18,7 @@ class P2pServer {
     const server = new Websocket.Server({ port: P2P_PORT });
     server.on('connection', (socket) => this.connectSocket(socket));
     this.connectToPeers();
+    console.log(`listening to peer-to-peer connections on: ${P2P_PORT}`);
   }
 
   connectToPeers() {
@@ -49,6 +50,7 @@ class P2pServer {
     console.log('Socket connected');
     this.messageHandler(socket);
     socket.send(JSON.stringify(this.blockchain.chain));
+    this.syncChains();
   }
 
   sendChain(socket) {

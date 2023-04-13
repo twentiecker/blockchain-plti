@@ -47,6 +47,7 @@ class Wallet {
   calculateBalance(blockchain) {
     let balance = this.balance;
     let transactions = [];
+    console.log(blockchain.chain);
     blockchain.chain.forEach((block) =>
       block.data.forEach((transaction) => {
         transactions.push(transaction);

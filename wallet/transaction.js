@@ -24,7 +24,8 @@ class Transaction {
     ]);
   }
 
-  static newTransaction(senderWallet, recipient, amount, contractCode) {
+  // static newTransaction(senderWallet, recipient, amount, contractCode) {
+  static newTransaction(senderWallet, recipient, amount) {
     if (amount > senderWallet.balance) {
       console.log(`Amount: ${amount} exceeds balance.`);
       return;
@@ -35,7 +36,8 @@ class Transaction {
         amount: senderWallet.balance - amount,
         address: senderWallet.publicKey,
       },
-      { amount, address: recipient, contractCode },
+      { amount, address: recipient },
+      // { amount, address: recipient, contractCode },
     ]);
   }
 
