@@ -10,8 +10,9 @@ class TransactionPool {
       (t) => t.id === transaction.id
     );
     if (transactionWithId) {
-      this.transactions[this.transactions.indexOf(transactionWithId)] =
-        transaction;
+      this.transactions[
+        this.transactions.indexOf(transactionWithId)
+      ] = transaction;
     } else {
       this.transactions.push(transaction);
     }

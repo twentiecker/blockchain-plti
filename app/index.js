@@ -53,9 +53,17 @@ app.get('/transactions', (req, res) => {
 });
 
 app.post('/transact', (req, res) => {
-  const { recipient, amount } = req.body;
+  const { recipient, amount, k1 = 0, k2 = 0, k3 = 0 } = req.body;
   // const transaction = sc.doTransaction(recipient, amount, bc, tp, contractCode);
-  const transaction = wallet.createTransaction(recipient, amount, bc, tp);
+  const transaction = wallet.createTransaction(
+    recipient,
+    amount,
+    k1,
+    k2,
+    k3,
+    bc,
+    tp
+  );
   p2pServer.broadcastTransaction(transaction);
   res.redirect('/transactions');
 });
