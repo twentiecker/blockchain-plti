@@ -5,7 +5,6 @@ const P2pServer = require('../p2p-server');
 const Wallet = require('../wallet');
 const TransactionPool = require('../wallet/transaction-pool');
 const Miner = require('./miner');
-// const TrContract = require('../contract');
 
 const HTTP_PORT = process.env.HTTP_PORT || 3001;
 const app = express();
@@ -14,22 +13,10 @@ const wallet = new Wallet();
 const tp = new TransactionPool();
 const p2pServer = new P2pServer(bc, tp);
 const miner = new Miner(bc, tp, wallet, p2pServer);
-// const sc = new TrContract();
-
-// let contractCode = null;
-// fs.readFile(__dirname + '/../contract/index.js', 'utf8', (err, data) => {
-//   if (err) {
-//     console.error(err);
-//     console.log('Current directory:', __dirname);
-//     return;
-//   }
-//   contractCode = data;
-// });
 
 app.use(bodyParser.json());
 
 app.get('/blocks', (req, res) => {
-  // res.json(sc.loadChain);
   res.json(bc.chain);
 });
 
@@ -48,19 +35,32 @@ app.get('/public-key', (req, res) => {
 });
 
 app.get('/transactions', (req, res) => {
-  // res.json(sc.loadTransactions(tp));
   res.json(tp.transactions);
 });
 
 app.post('/transact', (req, res) => {
-  const { recipient, amount, k1 = 0, k2 = 0, k3 = 0 } = req.body;
-  // const transaction = sc.doTransaction(recipient, amount, bc, tp, contractCode);
+  const {
+    recipient,
+    k11 = 0,
+    k21 = 0,
+    k31 = 0,
+    amount1 = k11 || k21 || k31 ? 1 : 0,
+    k12 = 0,
+    k22 = 0,
+    k32 = 0,
+    amount2 = k12 || k22 || k32 ? 1 : 0,
+  } = req.body;
+
   const transaction = wallet.createTransaction(
     recipient,
-    amount,
-    k1,
-    k2,
-    k3,
+    amount1,
+    k11,
+    k21,
+    k31,
+    amount2,
+    k12,
+    k22,
+    k32,
     bc,
     tp
   );

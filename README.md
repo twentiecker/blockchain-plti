@@ -1,15 +1,4 @@
-## Modul 1 Pembuatan Rantai Block
-
-Praktikum ini bertujuan untuk memandu mahasiswa dalam membuat Rantai Block dari sebuah
-Blockchain Network.
-
-Pembahasan:
-
-1. Set Up Blockchain Environment
-2. Build a Blockchain in the object-oriented programming style.
-3. Generate hashes for blocks in the chain.
-4. Unit Test Components of the Blockchain.
-5. Create an API around the Blockchain.
+## Tugas Besar Pembuatan Rantai Block E-Voting
 
 Tools yang digunakan:
 
@@ -23,10 +12,16 @@ Tools yang digunakan:
 npm install
 ```
 
-## Menjalankan Program
+## Menjalankan Program (Development)
 
 ```
 npm run dev
+```
+
+## Menjalankan Program (Production)
+
+```
+npm run start
 ```
 
 ## Simulasi Postman
@@ -37,19 +32,36 @@ Mendapatkan data blokchain
 GET localhost:3001/blocks
 ```
 
-Menambah blok pada blokchain
+Melakukan transaksi
 
 ```
-POST localhost:3001/mine
+POST localhost:3001/transact
 ```
 
-Pada saat menambah blok, perlu menyertakan "body" untuk menambahkan nilai "data". Pengiriman request tanpa mennyertakan data akan menyebakan isian data pada blok bernilai "undefined". Format yang akan dituliskan pada body menggunakan format penulisan JSON, oleh karena itu pilih type "JSON" pada format penulisan body dan pilih opsi "raw" dalam menuliskannya. Berikut contoh isian "body" pada postman
+Mining data transaksi
+
+```
+GET localhost:3001/mine-transactions
+```
+
+Mendapatkan data transaksi yang sedang berjalan
+
+```
+GET localhost:3001/transactions
+```
+
+Pada saat melakukan transaksi, perlu menyertakan "body" untuk menambahkan nilai "data". Format yang akan dituliskan pada body menggunakan format penulisan JSON, oleh karena itu pilih type "JSON" pada format penulisan body dan pilih opsi "raw" dalam menuliskannya. Berikut contoh isian "body" pada postman
 
 ```
 {
-    "data": {
-        "to": "lukman",
-        "message":"hallo lukman"
-    }
+    "recipient": <public_key>,
+    "amount1": <number, default value = 0>,
+    "k11": <number, default value = 0>,
+    "k21": <number, default value = 0>,
+    "k31": <number, default value = 0>,
+    "amount2": <number, default value = 0>,
+    "k12": <number, default value = 0>,
+    "k22": <number, default value = 0>,
+    "k32": <number, default value = 0>
 }
 ```

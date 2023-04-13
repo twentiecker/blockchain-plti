@@ -1,5 +1,4 @@
 const ChainUtil = require('../chain-util');
-const { MINING_REWARD } = require('../config.js');
 
 class Transaction {
   constructor() {
@@ -15,42 +14,45 @@ class Transaction {
     return transaction;
   }
 
-  // static rewardTransaction(minerWallet, blockchainWallet) {
-  //   return Transaction.transactionWithOutputs(blockchainWallet, [
-  //     {
-  //       amount: MINING_REWARD,
-  //       address: minerWallet.publicKey,
-  //     },
-  //   ]);
-  // }
-
-  // static newTransaction(senderWallet, recipient, amount, contractCode) {
-  static newTransaction(senderWallet, recipient, amount, k1, k2, k3) {
-    // if (amount > senderWallet.balance) {
-    //   console.log(`Amount: ${amount} exceeds balance.`);
-    //   return;
-    // }
-    // 106;
+  static newTransaction(
+    senderWallet,
+    recipient,
+    amount1,
+    k11,
+    k21,
+    k31,
+    amount2,
+    k12,
+    k22,
+    k32
+  ) {
     return Transaction.transactionWithOutputs(senderWallet, [
       {
-        amount: senderWallet.balance - amount,
-        k1: senderWallet.k1 + k1,
-        k2: senderWallet.k2 + k2,
-        k3: senderWallet.k3 + k3,
+        amount1: senderWallet.balance - amount1,
+        k11: senderWallet.k11 + k11,
+        k21: senderWallet.k21 + k21,
+        k31: senderWallet.k31 + k31,
+        amount2: senderWallet.balance2 - amount2,
+        k12: senderWallet.k12 + k12,
+        k22: senderWallet.k22 + k22,
+        k32: senderWallet.k32 + k32,
         address: senderWallet.publicKey,
       },
-      { amount, k1, k2, k3, address: recipient },
-      // { amount, address: recipient, contractCode },
+      { amount1, k11, k21, k31, amount2, k12, k22, k32, address: recipient },
     ]);
   }
 
   static signTransaction(transaction, senderWallet) {
     transaction.input = {
       timestamp: Date.now(),
-      amount: senderWallet.balance,
-      k1: senderWallet.k1,
-      k2: senderWallet.k2,
-      k3: senderWallet.k3,
+      amount1: senderWallet.balance,
+      k11: senderWallet.k11,
+      k21: senderWallet.k21,
+      k31: senderWallet.k31,
+      amount2: senderWallet.balance2,
+      k12: senderWallet.k12,
+      k22: senderWallet.k22,
+      k32: senderWallet.k32,
       address: senderWallet.publicKey,
       signature: senderWallet.sign(ChainUtil.hash(transaction.outputs)),
     };
@@ -64,21 +66,45 @@ class Transaction {
     );
   }
 
-  update(senderWallet, recipient, amount, k1, k2, k3) {
+  update(
+    senderWallet,
+    recipient,
+    amount1,
+    k11,
+    k21,
+    k31,
+    amount2,
+    k12,
+    k22,
+    k32
+  ) {
     const senderOutput = this.outputs.find(
       (output) => output.address === senderWallet.publicKey
     );
-    // if (amount > senderOutput.amount) {
-    //   console.log(`Amount: ${amount} exceeds balance.`);
-    //   return;
-    // }
-    senderOutput.amount = senderOutput.amount - amount;
-    senderOutput.k1 = senderOutput.k1 + k1;
-    senderOutput.k2 = senderOutput.k2 + k2;
-    senderOutput.k3 = senderOutput.k3 + k3;
-    this.outputs.push({ amount, k1, k2, k3, address: recipient });
+
+    senderOutput.amount1 = senderOutput.amount1 - amount1;
+    senderOutput.k11 = senderOutput.k11 + k11;
+    senderOutput.k21 = senderOutput.k21 + k21;
+    senderOutput.k31 = senderOutput.k31 + k31;
+    senderOutput.amount2 = senderOutput.amount2 - amount2;
+    senderOutput.k12 = senderOutput.k12 + k12;
+    senderOutput.k22 = senderOutput.k22 + k22;
+    senderOutput.k32 = senderOutput.k32 + k32;
+
+    this.outputs.push({
+      amount1,
+      k11,
+      k21,
+      k31,
+      amount2,
+      k12,
+      k22,
+      k32,
+      address: recipient,
+    });
     Transaction.signTransaction(this, senderWallet);
     return this;
   }
 }
+
 module.exports = Transaction;
