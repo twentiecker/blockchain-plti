@@ -9,8 +9,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "app/index.js",
-      "protocols": ["websocket"]
+      "dest": "app/index.js"
     }
   ]
 }
